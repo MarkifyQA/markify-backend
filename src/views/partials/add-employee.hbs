@@ -1,0 +1,20 @@
+<form class="box" action="/team/{{team._id}}/addemployee" method="POST">
+    <label>Enter User Details:</label>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field">
+                <input class="input" type="text" placeholder="Enter First Name" name="firstName">
+            </div>
+            <div class="field">
+                <input class="input" type="text" placeholder="Enter Last Name" name="lastName">
+            </div>
+            <div class="field">
+                <input class="input" type="text" placeholder="Enter Email" name="email">
+            </div>
+            <div class="field">
+                <input class="input" type="text" placeholder="Enter Supervisor" name="supervisor">
+            </div>
+        </div>
+    </div>
+    <button class="button is-primary">Add Employee</button>
+</form>

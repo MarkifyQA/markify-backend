@@ -1,0 +1,16 @@
+{{#each teams}}
+    <div class="box box-link-hover-shadow">
+        <h2 class="title">
+            {{teamName}}
+        </h2>
+        <a href="/team/{{_id}}" class="button">
+      <span class="icon is-small">
+        <i class="fas fa-folder-open"></i>
+      </span>
+        </a>
+        </a>
+        <a href="/dashboard/deleteteam/{{_id}}" class="button">
+            <i class="fas fa-trash"></i>
+        </a>
+    </div>
+{{/each}}
