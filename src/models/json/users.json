@@ -1,11 +1,12 @@
 {
   "users": [
     {
-      "firstName": "Adam",
-      "lastName": "Gibson",
-      "email": "test@test.com",
-      "password": "testasd",
-      "_id": "8f1c5f80-839c-4a86-ade0-0d1eb87c26ce"
+      "firstName": "test",
+      "lastName": "account",
+      "email": "testaccount@test.com",
+      "password": "test",
+      "_id": "73b43f7f-e275-45c8-82b6-994de9297abf",
+      "companyId": "9672e28d-f78a-42e2-a37f-50437ecb260e"
     }
   ]
 }

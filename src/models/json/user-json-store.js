@@ -16,6 +16,7 @@ export const userJsonStore = {
   async addUser(user) {
     await db.read();
     user._id = v4();
+    user.companyId = v4();
     db.data.users.push(user);
     await db.write();
     return user;

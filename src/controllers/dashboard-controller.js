@@ -19,6 +19,7 @@ export const dashboardController = {
       const loggedInUser = request.auth.credentials;
       const newTeam = {
         userid: loggedInUser._id,
+        companyId: loggedInUser.companyId,
         teamName: request.payload.teamName,
       };
       await db.teamStore.addTeam(newTeam);
