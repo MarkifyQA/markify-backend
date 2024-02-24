@@ -23,8 +23,12 @@ export const teamJsonStore = {
 
   async getTeamById(id) {
     await db.read();
-    const list = db.data.teams.find((team) => team._id === id);
-    list.employees = await employeeJsonStore.getEmployeesByTeamId(list._id);
+    let list = db.data.teams.find((team) => team._id === id);
+    if (list) {
+      list.employees = await employeeJsonStore.getEmployeesByTeamId(list._id);
+    } else {
+      list = null;
+    }
     return list;
   },
 
@@ -36,7 +40,7 @@ export const teamJsonStore = {
   async deleteTeamById(id) {
     await db.read();
     const index = db.data.teams.findIndex((team) => team._id === id);
-    db.data.teams.splice(index, 1);
+    if (index !== -1) db.data.teams.splice(index, 1);
     await db.write();
   },
 
