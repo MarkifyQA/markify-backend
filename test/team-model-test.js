@@ -1,10 +1,14 @@
 import { assert } from "chai";
+import { Types } from "mongoose";
 import { db } from "../src/models/db.js";
 import { testTeams, testTeam } from "./fixtures.js";
+import { assertSubset } from "./test-utils.js";
+
+const { ObjectId } = Types;
 
 suite("Team Model tests", () => {
   setup(async () => {
-    db.init();
+    db.init("mongo");
     for (let i = 0; i < testTeams.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       testTeams[i] = await db.teamStore.addTeam(testTeams[i]);
@@ -17,7 +21,7 @@ suite("Team Model tests", () => {
 
   test("Create a team", async () => {
     const team = await db.teamStore.addTeam(testTeam);
-    assert.equal(testTeam, team);
+    assertSubset(testTeam, team);
     assert.isDefined(team._id);
   });
 
@@ -32,7 +36,7 @@ suite("Team Model tests", () => {
   test("get a team - success", async () => {
     const team = await db.teamStore.addTeam(testTeam);
     const returnedTeam = await db.teamStore.getTeamById(team._id);
-    assert.equal(testTeam, team);
+    assertSubset(testTeam, team);
   });
 
   test("delete One Team - success", async () => {
@@ -50,7 +54,7 @@ suite("Team Model tests", () => {
   });
 
   test("delete One Team - fail", async () => {
-    await db.teamStore.deleteTeamById("bad-id");
+    await db.teamStore.deleteTeamById(new ObjectId().toString());
     const allTeams = await db.teamStore.getAllTeams();
     assert.equal(testTeams.length, allTeams.length);
   });

@@ -1,13 +1,17 @@
 import { assert } from "chai";
+import { Types } from "mongoose";
 import { db } from "../src/models/db.js";
 import { testUser, testUsers } from "./fixtures.js";
+import { assertSubset } from "./test-utils.js";
+
+const { ObjectId } = Types;
 
 suite("User API tests", () => {
   setup(async () => {
-    db.init();
+    db.init("mongo");
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      await db.userStore.addUser(testUsers[i]);
+      testUsers[i] = await db.userStore.addUser(testUsers[i]);
     }
   });
 
@@ -17,7 +21,7 @@ suite("User API tests", () => {
 
   test("Create User", async () => {
     const newUser = await db.userStore.addUser(testUser);
-    assert.deepEqual(testUser, newUser);
+    assertSubset(testUser, newUser);
   });
 
   test("Get user - success", async () => {
@@ -29,7 +33,7 @@ suite("User API tests", () => {
   });
 
   test("Get user - fail", async () => {
-    const noUserWithId = await db.userStore.getUserById("123");
+    const noUserWithId = await db.userStore.getUserById(new ObjectId().toString());
     assert.isNull(noUserWithId);
     const noUserWithEmail = await db.userStore.getUserByEmail("not@user.com");
     assert.isNull(noUserWithEmail);
