@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import { Types } from "mongoose";
-import { db } from "../src/models/db.js";
-import { testTeams, testTeam } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { testTeams, testTeam } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 const { ObjectId } = Types;
 

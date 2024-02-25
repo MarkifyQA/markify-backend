@@ -8,6 +8,10 @@ const teamSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  companyId: {
+    type: String,
+    ref: "User",
+  },
 });
 
 export const Team = Mongoose.model("Team", teamSchema);

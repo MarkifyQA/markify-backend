@@ -6,8 +6,13 @@ const employeeSchema = new Schema({
   firstName: String,
   lastName: String,
   email: String,
+  supervisor: String,
   teamid: {
     type: Schema.Types.ObjectId,
+    ref: "Team",
+  },
+  companyId: {
+    type: String,
     ref: "Team",
   },
 });
