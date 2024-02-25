@@ -24,4 +24,56 @@ export const markifyService = {
     const res = await axios.delete(`${this.markifyURL}/api/users`);
     return res.data;
   },
+
+  async deleteUser(id) {
+    return await axios.delete(`${this.markifyURL}/api/users/${id}`);
+  },
+
+  async createTeam(team) {
+    const res = await axios.post(`${this.markifyURL}/api/teams`, team);
+    return res.data;
+  },
+
+  async deleteAllTeams() {
+    const response = await axios.delete(`${this.markifyURL}/api/teams`);
+    return response.data;
+  },
+
+  async deleteTeam(id) {
+    return await axios.delete(`${this.markifyURL}/api/teams/${id}`);
+  },
+
+  async getAllTeams() {
+    const res = await axios.get(`${this.markifyURL}/api/teams`);
+    return res.data;
+  },
+
+  async getTeam(id) {
+    const res = await axios.get(`${this.markifyURL}/api/teams/${id}`);
+    return res.data;
+  },
+
+  async createEmployee(id, employee) {
+    const res = await axios.post(`${this.markifyURL}/api/teams/${id}/employees`, employee);
+    return res.data;
+  },
+
+  async deleteAllEmployees() {
+    const response = await axios.delete(`${this.markifyURL}/api/employees`);
+    return response.data;
+  },
+
+  async deleteEmployee(id) {
+    return await axios.delete(`${this.markifyURL}/api/employees/${id}`);
+  },
+
+  async getAllEmployees() {
+    const res = await axios.get(`${this.markifyURL}/api/employees`);
+    return res.data;
+  },
+
+  async getEmployee(id) {
+    const res = await axios.get(`${this.markifyURL}/api/employees/${id}`);
+    return res.data;
+  },
 };

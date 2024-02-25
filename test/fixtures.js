@@ -34,13 +34,13 @@ export const testTeam = {
 
 export const testTeams = [
   {
-    title: "Team 1",
+    teamName: "Team 1",
   },
   {
-    title: "Team 2",
+    teamName: "Team 2",
   },
   {
-    title: "Team 3",
+    teamName: "Team 3",
   },
 ];
 
