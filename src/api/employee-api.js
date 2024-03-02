@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { EmployeeArraySpec, EmployeeSpec, EmployeeSpecPlus, IdSpec } from "../models/joi-schemas.js";
+import { validationError } from "../logger.js";
 
 export const employeeApi = {
   find: {
@@ -12,6 +14,10 @@ export const employeeApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: EmployeeArraySpec, failAction: validationError },
+    description: "Get all employees",
+    notes: "Returns all employees",
   },
 
   findOne: {
@@ -27,6 +33,11 @@ export const employeeApi = {
         return Boom.serverUnavailable("No Employee with this id");
       }
     },
+    tags: ["api"],
+    description: "Find an employee",
+    notes: "Returns an employee",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: EmployeeSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -43,6 +54,11 @@ export const employeeApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create an employee",
+    notes: "Returns the newly created employee",
+    validate: { payload: EmployeeSpec },
+    response: { schema: EmployeeSpecPlus, failAction: validationError },
   },
 
   deleteOne: {
@@ -59,6 +75,9 @@ export const employeeApi = {
         return Boom.serverUnavailable("No Employee with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete an employee",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -71,5 +90,7 @@ export const employeeApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all employees",
   },
 };

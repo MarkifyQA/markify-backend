@@ -25,7 +25,7 @@ export const markifyService = {
     return res.data;
   },
 
-  async deleteUser(id) {
+  async deleteUserById(id) {
     return await axios.delete(`${this.markifyURL}/api/users/${id}`);
   },
 

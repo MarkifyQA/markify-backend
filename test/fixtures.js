@@ -48,7 +48,6 @@ export const testEmployee = {
   firstName: "test",
   lastName: "employee",
   email: "test@employee.com",
-  password: "test",
   supervisor: "Test Supervisor",
 };
 
@@ -57,21 +56,18 @@ export const testEmployees = [
     firstName: "test",
     lastName: "employee 1",
     email: "test@employee1.com",
-    password: "test",
     supervisor: "Test Supervisor 1",
   },
   {
     firstName: "test",
     lastName: "employee 2",
     email: "test@employee2.com",
-    password: "test",
     supervisor: "Test Supervisor 2",
   },
   {
     firstName: "test",
     lastName: "employee 3",
     email: "test@employee 3.com",
-    password: "test",
     supervisor: "Test Supervisor 3",
   },
 ];

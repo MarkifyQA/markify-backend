@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { IdSpec, TeamArraySpec, TeamSpec, TeamSpecPlus } from "../models/joi-schemas.js";
+import { validationError } from "../logger.js";
 
 export const teamApi = {
   find: {
@@ -12,6 +14,10 @@ export const teamApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Get all teams",
+    notes: "Returns details of all teams",
+    response: { schema: TeamArraySpec, failAction: validationError },
   },
 
   findOne: {
@@ -27,6 +33,11 @@ export const teamApi = {
         return Boom.serverUnavailable("No Team with this id");
       }
     },
+    tags: ["api"],
+    description: "Get a specific team",
+    notes: "Returns team details",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: TeamSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -43,6 +54,11 @@ export const teamApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a Team",
+    notes: "Returns the newly created team",
+    validate: { payload: TeamSpec, failAction: validationError },
+    response: { schema: TeamSpecPlus, failAction: validationError },
   },
 
   deleteOne: {
@@ -59,6 +75,9 @@ export const teamApi = {
         return Boom.serverUnavailable("No Team with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a team",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -71,5 +90,7 @@ export const teamApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all teams",
   },
 };

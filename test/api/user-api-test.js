@@ -3,11 +3,12 @@ import { markifyService } from "./markify-service.js";
 import { testUser, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
+const users = new Array(testUsers.length);
 suite("User API tests", () => {
   setup(async () => {
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testUsers[i] = await markifyService.createUser(testUsers[i]);
+      users[0] = await markifyService.createUser(testUsers[i]);
     }
   });
   teardown(async () => {
@@ -29,8 +30,8 @@ suite("User API tests", () => {
   });
 
   test("get a user - success", async () => {
-    const returnedUser = await markifyService.getUser(testUsers[0]._id);
-    assert.deepEqual(testUsers[0], returnedUser);
+    const returnedUser = await markifyService.getUser(users[0]._id);
+    assert.deepEqual(users[0], returnedUser);
   });
 
   test("get a user - fail", async () => {
@@ -55,7 +56,7 @@ suite("User API tests", () => {
   test("get a user - deleted user", async () => {
     await markifyService.deleteAllUsers();
     try {
-      const returnedUser = await markifyService.getUser(testUsers[0]._id);
+      const returnedUser = await markifyService.getUser(users[0]._id);
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
