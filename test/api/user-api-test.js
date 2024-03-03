@@ -1,19 +1,23 @@
 import { assert } from "chai";
 import { markifyService } from "./markify-service.js";
-import { testUser, testUsers } from "../fixtures.js";
+import { testUser, testUserCredentials, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
 const users = new Array(testUsers.length);
 suite("User API tests", () => {
   setup(async () => {
+    markifyService.clearAuth();
+    await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
+    await markifyService.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       users[0] = await markifyService.createUser(testUsers[i]);
     }
+    await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
   });
-  teardown(async () => {
-    await markifyService.deleteAllUsers();
-  });
+  teardown(async () => {});
 
   test("create a user", async () => {
     const newUser = await markifyService.createUser(testUser);
@@ -23,10 +27,12 @@ suite("User API tests", () => {
 
   test("delete all users", async () => {
     let returnedUsers = await markifyService.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    assert.equal(returnedUsers.length, 4);
     await markifyService.deleteAllUsers();
+    await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     returnedUsers = await markifyService.getAllUsers();
-    assert.equal(returnedUsers.length, 0);
+    assert.equal(returnedUsers.length, 1);
   });
 
   test("get a user - success", async () => {
@@ -55,6 +61,8 @@ suite("User API tests", () => {
 
   test("get a user - deleted user", async () => {
     await markifyService.deleteAllUsers();
+    await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     try {
       const returnedUser = await markifyService.getUser(users[0]._id);
       assert.fail("Should not return a response");

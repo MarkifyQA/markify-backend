@@ -5,7 +5,9 @@ import { validationError } from "../logger.js";
 
 export const employeeApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const employees = await db.employeeStore.getAllEmployees();
@@ -21,7 +23,9 @@ export const employeeApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       try {
         const employee = await db.employeeStore.getEmployeeById(request.params.id);
@@ -41,7 +45,9 @@ export const employeeApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const employee = request.payload;
@@ -62,7 +68,9 @@ export const employeeApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const employee = await db.employeeStore.getEmployeeById(request.params.id);
@@ -81,7 +89,9 @@ export const employeeApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.employeeStore.deleteAllEmployees();

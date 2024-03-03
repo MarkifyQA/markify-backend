@@ -1,22 +1,27 @@
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { markifyService } from "./markify-service.js";
-import { testUser, testTeam, testTeams, testEmployees, testEmployee } from "../fixtures.js";
+import { testUser, testTeam, testTeams, testEmployees, testEmployee, testUserCredentials } from "../fixtures.js";
 
 suite("Employee API tests", () => {
   let user = null;
   let team = null;
 
   setup(async () => {
+    await markifyService.clearAuth();
+    user = await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     await markifyService.deleteAllTeams();
     await markifyService.deleteAllUsers();
-    await markifyService.deleteAllEmployees();
     user = await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     testTeam.userid = user._id;
     team = await markifyService.createTeam(testTeam);
   });
 
-  teardown(async () => {});
+  teardown(async () => {
+    await markifyService.deleteAllEmployees();
+  });
 
   test("create employee", async () => {
     const returnedEmployee = await markifyService.createEmployee(team._id, testEmployee);

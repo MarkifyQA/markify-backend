@@ -71,3 +71,8 @@ export const testEmployees = [
     supervisor: "Test Supervisor 3",
   },
 ];
+
+export const testUserCredentials = {
+  email: "Test@user.com",
+  password: "testPW",
+};

@@ -2,15 +2,19 @@ import { assert } from "chai";
 import { markifyService } from "./markify-service.js";
 import { assertSubset } from "../test-utils.js";
 
-import { testUser, testTeam, testTeams } from "../fixtures.js";
+import { testUser, testTeam, testTeams, testUserCredentials } from "../fixtures.js";
 
 suite("Team API tests", () => {
   let user = null;
 
   setup(async () => {
+    markifyService.clearAuth();
+    user = await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     await markifyService.deleteAllTeams();
     await markifyService.deleteAllUsers();
     user = await markifyService.createUser(testUser);
+    await markifyService.authenticate(testUserCredentials);
     testTeam.userid = user._id;
   });
 

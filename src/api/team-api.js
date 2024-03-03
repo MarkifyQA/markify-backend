@@ -5,7 +5,9 @@ import { validationError } from "../logger.js";
 
 export const teamApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const teams = await db.teamStore.getAllTeams();
@@ -21,7 +23,9 @@ export const teamApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       try {
         const team = await db.teamStore.getTeamById(request.params.id);
@@ -41,7 +45,9 @@ export const teamApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const team = request.payload;
@@ -62,7 +68,9 @@ export const teamApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const team = await db.teamStore.getTeamById(request.params.id);
@@ -81,7 +89,9 @@ export const teamApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.teamStore.deleteAllTeams();
