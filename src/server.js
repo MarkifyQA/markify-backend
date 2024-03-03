@@ -11,11 +11,11 @@ import dotenv from "dotenv";
 import Joi from "joi";
 import Inert from "@hapi/inert";
 import HapiSwagger from "hapi-swagger";
+import jwt from "hapi-auth-jwt2";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { apiRoutes } from "./api-routes.js";
-import jwt from "hapi-auth-jwt2";
 import { validate } from "./api/jwt-utils.js";
 
 const swaggerOptions = {
@@ -38,6 +38,7 @@ async function init() {
   const server = Hapi.server({
     port: 3000,
     host: "localhost",
+    routes: { cors: true },
   });
   await server.register(Cookie);
   await server.register(jwt);
