@@ -50,7 +50,10 @@ export const teamApi = {
     },
     handler: async function (request, h) {
       try {
+        const loggedInUser = request.auth.credentials;
         const team = request.payload;
+        team.companyId = loggedInUser.companyId;
+        team.userid = loggedInUser._id;
         const newTeam = await db.teamStore.addTeam(team);
         if (newTeam) {
           return h.response(newTeam).code(201);
