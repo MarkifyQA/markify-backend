@@ -1,6 +1,7 @@
 import { userApi } from "./api/user-api.js";
 import { teamApi } from "./api/team-api.js";
 import { employeeApi } from "./api/employee-api.js";
+import { scorecardApi } from "./api/scorecard-api.js";
 
 export const apiRoutes = [
   { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
@@ -21,4 +22,8 @@ export const apiRoutes = [
   { method: "POST", path: "/api/teams/{id}/employees", config: employeeApi.create },
   { method: "DELETE", path: "/api/employees", config: employeeApi.deleteAll },
   { method: "DELETE", path: "/api/employees/{id}", config: employeeApi.deleteOne },
+
+  { method: "GET", path: "/api/scorecards", config: scorecardApi.find },
+  { method: "GET", path: "/api/scorecards/{id}", config: scorecardApi.findOne },
+  { method: "POST", path: "/api/teams/{id}/scorecards", config: scorecardApi.create },
 ];

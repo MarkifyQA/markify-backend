@@ -62,3 +62,29 @@ export const JwtAuth = Joi.object()
     token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
   })
   .label("JwtAuth");
+
+export const QuestionSpec = Joi.object({
+  text: Joi.string().required(),
+  answers: Joi.array().items(Joi.string().valid("Yes", "No")),
+  score: Joi.number().integer().required(),
+}).label("Question");
+
+export const QuestionSpecPlus = QuestionSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+});
+
+export const QuestionArraySpec = Joi.array().items(QuestionSpecPlus).label("QuestionArray");
+
+export const ScorecardSpec = Joi.object({
+  title: Joi.string().required(),
+  teamId: IdSpec,
+  questions: QuestionArraySpec,
+}).label("Scorecard");
+
+export const ScorecardSpecPlus = ScorecardSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("ScorecardSpecPlus");
+
+export const ScorecardArraySpec = Joi.array().items(ScorecardSpecPlus).label("ScorecardArray");
