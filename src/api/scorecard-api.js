@@ -44,6 +44,28 @@ export const scorecardApi = {
     response: { schema: ScorecardSpecPlus, failAction: validationError },
   },
 
+  findByTeam: {
+    auth: {
+      strategy: "jwt",
+    },
+    async handler(request) {
+      try {
+        const scorecards = await db.scorecardStore.getScorecardsByTeamId(request.params.id);
+        if (!scorecards) {
+          return Boom.notFound("No scorecards with this team id");
+        }
+        return scorecards;
+      } catch (err) {
+        return Boom.serverUnavailable("No scorecard with this team id");
+      }
+    },
+    tags: ["api"],
+    description: "Find scorecards for a team",
+    notes: "Returns a teams scorecards",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: ScorecardArraySpec, failAction: validationError },
+  },
+
   create: {
     auth: {
       strategy: "jwt",

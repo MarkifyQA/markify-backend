@@ -25,6 +25,7 @@ export const apiRoutes = [
 
   { method: "GET", path: "/api/scorecards", config: scorecardApi.find },
   { method: "GET", path: "/api/scorecards/{id}", config: scorecardApi.findOne },
+  { method: "GET", path: "/api/scorecards/team/{id}", config: scorecardApi.findByTeam },
   { method: "POST", path: "/api/teams/{id}/scorecards", config: scorecardApi.create },
   { method: "DELETE", path: "/api/scorecards/{id}", config: scorecardApi.deleteOne },
 ];

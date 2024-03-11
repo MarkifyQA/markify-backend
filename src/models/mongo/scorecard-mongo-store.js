@@ -29,4 +29,9 @@ export const scorecardMongoStore = {
       console.error(error, error.stack);
     }
   },
+
+  async getScorecardsByTeamId(id) {
+    const scorecards = await Scorecard.find({ teamId: id }).lean();
+    return scorecards;
+  },
 };
