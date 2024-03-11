@@ -66,4 +66,25 @@ export const scorecardApi = {
     validate: { payload: ScorecardSpec },
     response: { schema: ScorecardSpecPlus, failAction: validationError },
   },
+
+  deleteOne: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const scorecard = await db.scorecardStore.getScorecardById(request.params.id);
+        if (!scorecard) {
+          return Boom.notFound("No Scorecard with this id");
+        }
+        await db.scorecardStore.deleteScorecard(scorecard._id);
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("No scorecard with this id");
+      }
+    },
+    tags: ["api"],
+    description: "Delete a scorecard",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+  },
 };

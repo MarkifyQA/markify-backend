@@ -1,4 +1,5 @@
 import { Scorecard } from "./scorecard.js";
+import { Employee } from "./employee.js";
 
 export const scorecardMongoStore = {
   async getAllScorecards() {
@@ -19,5 +20,13 @@ export const scorecardMongoStore = {
       return scorecard;
     }
     return null;
+  },
+
+  async deleteScorecard(id) {
+    try {
+      await Scorecard.deleteOne({ _id: id });
+    } catch (error) {
+      console.error(error, error.stack);
+    }
   },
 };
