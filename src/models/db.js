@@ -9,12 +9,14 @@ import { userMongoStore } from "./mongo/user-mongo-store.js";
 import { teamMongoStore } from "./mongo/team-mongo-store.js";
 import { employeeMongoStore } from "./mongo/employee-mongo-store.js";
 import { scorecardMongoStore } from "./mongo/scorecard-mongo-store.js";
+import { resultMongoStore } from "./mongo/result-mongo-store.js";
 
 export const db = {
   userStore: null,
   teamStore: null,
   employeeStore: null,
   scorecardStore: null,
+  resultStore: null,
 
   init(storeType) {
     switch (storeType) {
@@ -28,6 +30,7 @@ export const db = {
         this.teamStore = teamMongoStore;
         this.employeeStore = employeeMongoStore;
         this.scorecardStore = scorecardMongoStore;
+        this.resultStore = resultMongoStore;
         connectMongo();
         break;
       default:

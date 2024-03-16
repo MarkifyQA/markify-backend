@@ -2,6 +2,7 @@ import { userApi } from "./api/user-api.js";
 import { teamApi } from "./api/team-api.js";
 import { employeeApi } from "./api/employee-api.js";
 import { scorecardApi } from "./api/scorecard-api.js";
+import { resultApi } from "./api/result-api.js";
 
 export const apiRoutes = [
   { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
@@ -28,4 +29,10 @@ export const apiRoutes = [
   { method: "GET", path: "/api/scorecards/team/{id}", config: scorecardApi.findByTeam },
   { method: "POST", path: "/api/teams/{id}/scorecards", config: scorecardApi.create },
   { method: "DELETE", path: "/api/scorecards/{id}", config: scorecardApi.deleteOne },
+
+  { method: "GET", path: "/api/results", config: resultApi.find },
+  { method: "GET", path: "/api/results/{id}", config: resultApi.findOne },
+  { method: "GET", path: "/api/results/team/{id}", config: resultApi.findByTeam },
+  { method: "POST", path: "/api/results", config: resultApi.create },
+  { method: "DELETE", path: "/api/results/{id}", config: resultApi.deleteOne },
 ];

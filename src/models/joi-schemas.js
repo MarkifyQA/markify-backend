@@ -88,3 +88,33 @@ export const ScorecardSpecPlus = ScorecardSpec.keys({
 }).label("ScorecardSpecPlus");
 
 export const ScorecardArraySpec = Joi.array().items(ScorecardSpecPlus).label("ScorecardArray");
+
+export const AnswerSpec = Joi.object({
+  text: Joi.string().required(),
+}).label("Answers");
+
+export const AnswerSpecPlus = AnswerSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+});
+
+export const AnswerArraySpec = Joi.array().items(AnswerSpecPlus).label("AnswerArray");
+
+export const ResultSpec = Joi.object({
+  employeeId: IdSpec,
+  teamId: IdSpec,
+  scorecardId: IdSpec,
+  evaluatorId: IdSpec,
+  answers: AnswerArraySpec,
+  totalScore: Joi.number(),
+  sumScore: Joi.number(),
+  percentScore: Joi.number(),
+  reference: Joi.string(),
+}).label("Result");
+
+export const ResultSpecPlus = ResultSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("ResultSpecPlus");
+
+export const ResultArraySpec = Joi.array().items(ResultSpecPlus).label("ResultArray");

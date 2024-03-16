@@ -1,5 +1,4 @@
 import { Scorecard } from "./scorecard.js";
-import { Employee } from "./employee.js";
 
 export const scorecardMongoStore = {
   async getAllScorecards() {
