@@ -44,6 +44,29 @@ export const teamApi = {
     response: { schema: TeamSpecPlus, failAction: validationError },
   },
 
+  findByCompany: {
+    auth: {
+      strategy: "jwt",
+    },
+    async handler(request) {
+      try {
+        const loggedInUser = request.auth.credentials;
+        const companyId = loggedInUser.companyId;
+        const teams = await db.teamStore.getTeamsByCompanyId(companyId);
+        if (!teams) {
+          return Boom.notFound("No teams with this company id");
+        }
+        return teams;
+      } catch (err) {
+        return Boom.serverUnavailable("No teams with this company id");
+      }
+    },
+    tags: ["api"],
+    description: "Find teams for a company",
+    notes: "Returns a companys teams",
+    response: { schema: TeamArraySpec, failAction: validationError },
+  },
+
   create: {
     auth: {
       strategy: "jwt",

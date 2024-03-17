@@ -44,13 +44,38 @@ export const employeeApi = {
     response: { schema: EmployeeSpecPlus, failAction: validationError },
   },
 
+  findByCompany: {
+    auth: {
+      strategy: "jwt",
+    },
+    async handler(request) {
+      try {
+        const loggedInUser = request.auth.credentials;
+        const companyId = loggedInUser.companyId;
+        const employees = await db.employeeStore.getEmployeesByCompanyId(companyId);
+        if (!employees) {
+          return Boom.notFound("No employees with this company id");
+        }
+        return employees;
+      } catch (err) {
+        return Boom.serverUnavailable("No employees with this company id");
+      }
+    },
+    tags: ["api"],
+    description: "Find employees for a company",
+    notes: "Returns a companys employees",
+    response: { schema: EmployeeArraySpec, failAction: validationError },
+  },
+
   create: {
     auth: {
       strategy: "jwt",
     },
     handler: async function (request, h) {
       try {
+        const loggedInUser = request.auth.credentials;
         const employee = request.payload;
+        employee.companyId = loggedInUser.companyId;
         const newEmployee = await db.employeeStore.addEmployee(request.params.id, employee);
         if (newEmployee) {
           return h.response(newEmployee).code(201);

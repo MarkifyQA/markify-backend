@@ -14,11 +14,11 @@ export const apiRoutes = [
 
   { method: "POST", path: "/api/teams", config: teamApi.create },
   { method: "DELETE", path: "/api/teams", config: teamApi.deleteAll },
-  { method: "GET", path: "/api/teams", config: teamApi.find },
+  { method: "GET", path: "/api/teams", config: teamApi.findByCompany },
   { method: "GET", path: "/api/teams/{id}", config: teamApi.findOne },
   { method: "DELETE", path: "/api/teams/{id}", config: teamApi.deleteOne },
 
-  { method: "GET", path: "/api/employees", config: employeeApi.find },
+  { method: "GET", path: "/api/employees", config: employeeApi.findByCompany },
   { method: "GET", path: "/api/employees/{id}", config: employeeApi.findOne },
   { method: "POST", path: "/api/teams/{id}/employees", config: employeeApi.create },
   { method: "DELETE", path: "/api/employees", config: employeeApi.deleteAll },
@@ -30,7 +30,7 @@ export const apiRoutes = [
   { method: "POST", path: "/api/teams/{id}/scorecards", config: scorecardApi.create },
   { method: "DELETE", path: "/api/scorecards/{id}", config: scorecardApi.deleteOne },
 
-  { method: "GET", path: "/api/results", config: resultApi.find },
+  { method: "GET", path: "/api/results", config: resultApi.findByCompany },
   { method: "GET", path: "/api/results/{id}", config: resultApi.findOne },
   { method: "GET", path: "/api/results/team/{id}", config: resultApi.findByTeam },
   { method: "POST", path: "/api/results", config: resultApi.create },

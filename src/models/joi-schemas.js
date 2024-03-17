@@ -105,6 +105,7 @@ export const ResultSpec = Joi.object({
   teamId: IdSpec,
   scorecardId: IdSpec,
   evaluatorId: IdSpec,
+  companyId: IdSpec,
   answers: AnswerArraySpec,
   totalScore: Joi.number(),
   sumScore: Joi.number(),

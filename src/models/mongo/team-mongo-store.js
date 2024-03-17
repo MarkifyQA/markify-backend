@@ -18,6 +18,16 @@ export const teamMongoStore = {
     return null;
   },
 
+  async getTeamsByCompanyId(id) {
+    if (id) {
+      const teams = await Team.find({ companyId: id }).lean();
+      if (teams) {
+        return teams;
+      }
+    }
+    return null;
+  },
+
   async addTeam(team) {
     const newTeam = new Team(team);
     const teamObj = await newTeam.save();

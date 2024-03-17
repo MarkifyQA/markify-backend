@@ -32,4 +32,9 @@ export const resultMongoStore = {
     const results = await Result.find({ teamId: id }).lean();
     return results;
   },
+
+  async getResultsByCompanyId(id) {
+    const results = await Result.find({ companyId: id }).lean();
+    return results;
+  },
 };

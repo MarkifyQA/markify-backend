@@ -27,6 +27,10 @@ const resultSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Scorecard",
   },
+  companyId: {
+    type: String,
+    ref: "User",
+  },
   answers: [answerSchema],
   totalScore: Number,
   sumScore: Number,

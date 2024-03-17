@@ -66,6 +66,30 @@ export const resultApi = {
     response: { schema: ResultArraySpec, failAction: validationError },
   },
 
+  findByCompany: {
+    auth: {
+      strategy: "jwt",
+    },
+    async handler(request) {
+      try {
+        const loggedInUser = request.auth.credentials;
+        const companyId = loggedInUser.companyId;
+        const results = await db.resultStore.getResultsByCompanyId(companyId);
+        if (!results) {
+          return Boom.notFound("No results with this company id");
+        }
+        return results;
+      } catch (err) {
+        return Boom.serverUnavailable("No results with this company id");
+      }
+    },
+    tags: ["api"],
+    description: "Find results for a company",
+    notes: "Returns a companys scores",
+    // validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: ResultArraySpec, failAction: validationError },
+  },
+
   create: {
     auth: {
       strategy: "jwt",
@@ -75,6 +99,7 @@ export const resultApi = {
         const loggedInUser = request.auth.credentials;
         const result = request.payload;
         result.evaluatorId = loggedInUser._id;
+        result.companyId = loggedInUser.companyId;
         const newResult = await db.resultStore.addResult(result);
         if (newResult) {
           return h.response(newResult).code(201);

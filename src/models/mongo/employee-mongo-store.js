@@ -18,6 +18,14 @@ export const employeeMongoStore = {
     return employees;
   },
 
+  async getEmployeesByCompanyId(id) {
+    if (id) {
+      const employees = await Employee.find({ companyId: id }).lean();
+      return employees;
+    }
+    return null;
+  },
+
   async getEmployeeById(id) {
     if (id) {
       const employee = await Employee.findOne({ _id: id }).lean();
