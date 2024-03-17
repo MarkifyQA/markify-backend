@@ -10,7 +10,7 @@ const userSchema = new Schema({
   password: String,
   companyId: {
     type: String,
-    default: v4,
+    default: () => v4(),
   },
 });
 

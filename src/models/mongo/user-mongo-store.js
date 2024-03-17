@@ -14,6 +14,14 @@ export const userMongoStore = {
     return null;
   },
 
+  async getUsersByCompanyId(id) {
+    if (id) {
+      const users = await User.find({ companyId: id }).lean();
+      return users;
+    }
+    return null;
+  },
+
   async addUser(user) {
     const newUser = new User(user);
     const userObj = await newUser.save();

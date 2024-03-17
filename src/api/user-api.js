@@ -69,6 +69,29 @@ export const userApi = {
     response: { schema: UserSpecPlus, failAction: validationError },
   },
 
+  findByCompany: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const loggedInUser = request.auth.credentials;
+        const companyId = loggedInUser.companyId;
+        const users = await db.userStore.getUsersByCompanyId(companyId);
+        if (!users) {
+          return Boom.notFound("No Users with this company id");
+        }
+        return users;
+      } catch (err) {
+        return Boom.serverUnavailable("No Users with this company id");
+      }
+    },
+    tags: ["api"],
+    description: "Get all users for a company",
+    notes: "Returns all user details for a company",
+    response: { schema: UserArray, failAction: validationError },
+  },
+
   create: {
     auth: false,
     handler: async function (request, h) {
@@ -84,6 +107,31 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Create a User",
+    notes: "Returns the newly created user",
+    validate: { payload: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
+  },
+
+  addUser: {
+    auth: "jwt",
+    handler: async function (request, h) {
+      try {
+        const newUserDetails = { ...request.payload };
+        if (request.auth.isAuthenticated) {
+          const loggedInUser = request.auth.credentials;
+          newUserDetails.companyId = loggedInUser.companyId;
+        }
+        const user = await db.userStore.addUser(newUserDetails);
+        if (user) {
+          return h.response(user).code(201);
+        }
+        return Boom.badImplementation("error creating user");
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Create a new User",
     notes: "Returns the newly created user",
     validate: { payload: UserSpec, failAction: validationError },
     response: { schema: UserSpecPlus, failAction: validationError },
