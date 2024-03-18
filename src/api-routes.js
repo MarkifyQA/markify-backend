@@ -22,6 +22,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/employees", config: employeeApi.findByCompany },
   { method: "GET", path: "/api/employees/{id}", config: employeeApi.findOne },
   { method: "POST", path: "/api/teams/{id}/employees", config: employeeApi.create },
+  { method: "PUT", path: "/api/employees/{id}", config: employeeApi.update },
   { method: "DELETE", path: "/api/employees", config: employeeApi.deleteAll },
   { method: "DELETE", path: "/api/employees/{id}", config: employeeApi.deleteOne },
 

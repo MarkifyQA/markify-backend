@@ -46,12 +46,14 @@ export const employeeMongoStore = {
     await Employee.deleteMany({});
   },
 
-  async updateEmployee(employee, updatedEmployee) {
-    const employeeDoc = await Employee.findOne({ _id: employee._id });
+  async updateEmployee(employeeId, updatedEmployee) {
+    const employeeDoc = await Employee.findOne({ _id: employeeId });
+    if (!employeeDoc) {
+      throw new Error("Employee not found");
+    }
     employeeDoc.firstName = updatedEmployee.firstName;
     employeeDoc.lastName = updatedEmployee.lastName;
     employeeDoc.email = updatedEmployee.email;
-    employeeDoc.password = updatedEmployee.password;
     employeeDoc.supervisor = updatedEmployee.supervisor;
     await employeeDoc.save();
   },

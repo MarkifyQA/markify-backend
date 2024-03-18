@@ -128,4 +128,38 @@ export const employeeApi = {
     tags: ["api"],
     description: "Delete all employees",
   },
+
+  update: {
+    auth: {
+      strategy: "jwt",
+    },
+    async handler(request, h) {
+      try {
+        const updatedEmployeeData = request.payload;
+        const employeeId = request.params.id;
+        const loggedInUser = request.auth.credentials;
+        const employee = await db.employeeStore.getEmployeeById(employeeId);
+
+        if (!employee) {
+          return Boom.notFound("No Employee with this id");
+        }
+        if (employee.companyId !== loggedInUser.companyId) {
+          return Boom.forbidden("You do not have permission to update this employee");
+        }
+        await db.employeeStore.updateEmployee(employeeId, updatedEmployeeData);
+        return h.response(updatedEmployeeData).code(200);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Update an employee",
+    notes: "Updates an employee's details",
+    validate: {
+      params: { id: IdSpec },
+      payload: EmployeeSpec,
+      failAction: validationError,
+    },
+    response: { schema: EmployeeSpecPlus, failAction: validationError },
+  },
 };
