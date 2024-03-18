@@ -49,4 +49,16 @@ export const userMongoStore = {
   async deleteAll() {
     await User.deleteMany({});
   },
+
+  async updateUser(userId, updatedUser) {
+    const userDoc = await User.findOne({ _id: userId });
+    if (!userDoc) {
+      throw new Error("User not found");
+    }
+    userDoc.firstName = updatedUser.firstName;
+    userDoc.lastName = updatedUser.lastName;
+    userDoc.email = updatedUser.email;
+    userDoc.password = await bcrypt.hash(updatedUser.password, saltRounds);
+    await userDoc.save();
+  },
 };

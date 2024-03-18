@@ -9,6 +9,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/users", config: userApi.findByCompany },
   { method: "POST", path: "/api/users", config: userApi.create },
   { method: "POST", path: "/api/users/user", config: userApi.addUser },
+  { method: "PUT", path: "/api/users/{id}", config: userApi.update },
   { method: "DELETE", path: "/api/users", config: userApi.deleteAll },
   { method: "GET", path: "/api/users/{id}", config: userApi.findOne },
   { method: "DELETE", path: "/api/users/{id}", config: userApi.deleteOne },

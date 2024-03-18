@@ -177,4 +177,36 @@ export const userApi = {
     notes: "User deleted from Markify",
     validate: { params: { id: IdSpec }, failAction: validationError },
   },
+
+  update: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const userId = request.params.id;
+        const updatedUser = request.payload;
+        const user = await db.userStore.getUserById(userId);
+
+        const loggedInUser = request.auth.credentials;
+        if (user.companyId !== loggedInUser.companyId) {
+          return Boom.forbidden("You do not have permission to update this user");
+        }
+        await db.userStore.updateUser(userId, updatedUser);
+        return h.response({ success: true, message: "User updated successfully" }).code(200);
+      } catch (err) {
+        console.error(err);
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Update a user",
+    notes: "Updates user details",
+    validate: {
+      params: { id: IdSpec },
+      payload: UserSpec,
+      failAction: validationError,
+    },
+    response: { schema: UserSpecPlus, failAction: validationError },
+  },
 };
