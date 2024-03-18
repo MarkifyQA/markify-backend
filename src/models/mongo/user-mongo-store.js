@@ -1,4 +1,7 @@
 import { User } from "./user.js";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10;
 
 export const userMongoStore = {
   async getAllUsers() {
@@ -23,6 +26,7 @@ export const userMongoStore = {
   },
 
   async addUser(user) {
+    user.password = await bcrypt.hash(user.password, saltRounds);
     const newUser = new User(user);
     const userObj = await newUser.save();
     const u = await this.getUserById(userObj._id);
