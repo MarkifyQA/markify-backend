@@ -10,6 +10,11 @@ export const markifyService = {
     return res.data;
   },
 
+  async addUser(user) {
+    const res = await axios.post(`${this.markifyURL}/api/users/user`, user);
+    return res.data;
+  },
+
   async getUser(id) {
     const res = await axios.get(`${this.markifyURL}/api/users/${id}`);
     return res.data;

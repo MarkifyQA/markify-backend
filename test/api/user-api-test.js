@@ -10,12 +10,12 @@ suite("User API tests", () => {
     await markifyService.createUser(testUser);
     await markifyService.authenticate(testUserCredentials);
     await markifyService.deleteAllUsers();
-    for (let i = 0; i < testUsers.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      users[0] = await markifyService.createUser(testUsers[i]);
-    }
     await markifyService.createUser(testUser);
     await markifyService.authenticate(testUserCredentials);
+    for (let i = 0; i < testUsers.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      users[i] = await markifyService.addUser(testUsers[i]);
+    }
   });
   teardown(async () => {});
 

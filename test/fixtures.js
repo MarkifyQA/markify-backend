@@ -4,7 +4,7 @@ export const testUser = {
   firstName: "Test",
   lastName: "User",
   email: "Test@user.com",
-  password: "testPW",
+  password: "12345678",
 };
 
 export const testUsers = [
@@ -12,19 +12,19 @@ export const testUsers = [
     firstName: "Tom",
     lastName: "Brady",
     email: "tom@brady.com",
-    password: "secret",
+    password: "secret123",
   },
   {
     firstName: "Payton",
     lastName: "Manning",
     email: "payton@manning.com",
-    password: "secret",
+    password: "secret123",
   },
   {
     firstName: "Colin",
     lastName: "Farrell",
     email: "coling@farrell.com",
-    password: "secret",
+    password: "secret123",
   },
 ];
 
@@ -54,25 +54,25 @@ export const testEmployee = {
 export const testEmployees = [
   {
     firstName: "test",
-    lastName: "employee 1",
+    lastName: "employee one",
     email: "test@employee1.com",
-    supervisor: "Test Supervisor 1",
+    supervisor: "Test Supervisor one",
   },
   {
     firstName: "test",
-    lastName: "employee 2",
+    lastName: "employee two",
     email: "test@employee2.com",
-    supervisor: "Test Supervisor 2",
+    supervisor: "Test Supervisor two",
   },
   {
     firstName: "test",
-    lastName: "employee 3",
-    email: "test@employee 3.com",
-    supervisor: "Test Supervisor 3",
+    lastName: "employee three",
+    email: "test@employee3.com",
+    supervisor: "Test Supervisor three",
   },
 ];
 
 export const testUserCredentials = {
   email: "Test@user.com",
-  password: "testPW",
+  password: "12345678",
 };
