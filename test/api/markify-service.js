@@ -91,4 +91,18 @@ export const markifyService = {
   async clearAuth() {
     axios.defaults.headers.common["Authorization"] = "";
   },
+
+  async createScorecard(teamId, scorecard) {
+    const response = await axios.post(`${this.markifyURL}/api/teams/${teamId}/scorecards`, scorecard);
+    return response.data;
+  },
+
+  async deleteScorecard(id) {
+    return await axios.delete(`${this.markifyURL}/api/scorecards/${id}`);
+  },
+
+  async getScorecard(id) {
+    const res = await axios.get(`${this.markifyURL}/api/scorecards/${id}`);
+    return res.data;
+  },
 };

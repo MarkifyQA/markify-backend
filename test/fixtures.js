@@ -76,3 +76,19 @@ export const testUserCredentials = {
   email: "Test@user.com",
   password: "12345678",
 };
+
+export const testScorecard = {
+  title: "Customer Service Scorecard",
+  questions: [
+    {
+      text: "Did the right opening get used?",
+      answers: ["Yes", "No"],
+      score: 1,
+    },
+    {
+      text: "Did the account get updated?",
+      answers: ["Yes", "No"],
+      score: 1,
+    },
+  ],
+};
