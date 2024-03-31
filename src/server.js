@@ -39,8 +39,7 @@ async function init() {
     port: process.env.PORT || 3000,
     routes: {
       cors: {
-        // todo change once app is deployed
-        origin: ["http://localhost:5173"],
+        origin: ["http://localhost:5173", "https://markifyqa.netlify.app", "https://markifyqa.com"],
         credentials: true,
       },
     },
