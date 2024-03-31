@@ -105,4 +105,29 @@ export const markifyService = {
     const res = await axios.get(`${this.markifyURL}/api/scorecards/${id}`);
     return res.data;
   },
+
+  async getResults() {
+    const res = await axios.get(`${this.markifyURL}/api/results`);
+    return res.data;
+  },
+
+  async getResult(id) {
+    const res = await axios.get(`${this.markifyURL}/api/results/${id}`);
+    return res.data;
+  },
+
+  async getResultsByTeam(id) {
+    const res = await axios.get(`${this.markifyURL}/api/results/team/${id}`);
+    return res.data;
+  },
+
+  async createResult(result) {
+    const res = await axios.post(`${this.markifyURL}/api/results`, result);
+    return res.data;
+  },
+
+  async deleteResult(id) {
+    const res = await axios.delete(`${this.markifyURL}/api/results/${id}`);
+    return res;
+  },
 };

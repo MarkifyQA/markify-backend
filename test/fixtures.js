@@ -92,3 +92,18 @@ export const testScorecard = {
     },
   ],
 };
+
+export const testResult = {
+  answers: [
+    {
+      text: "Yes",
+    },
+    {
+      text: "No",
+    },
+  ],
+  totalScore: 1,
+  sumScore: 2,
+  percentScore: 50,
+  reference: "Test Result",
+};
