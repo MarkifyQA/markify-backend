@@ -12,8 +12,6 @@ import Joi from "joi";
 import Inert from "@hapi/inert";
 import HapiSwagger from "hapi-swagger";
 import jwt from "hapi-auth-jwt2";
-import Scooter from "@hapi/scooter";
-import Blankie from "blankie";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
@@ -38,11 +36,10 @@ if (result.error) {
 
 async function init() {
   const server = Hapi.server({
-    port: 3000,
-    host: "localhost",
+    port: process.env.PORT || 3000,
     routes: {
       cors: {
-        //todo change once app is deployed
+        // todo change once app is deployed
         origin: ["http://localhost:5173"],
         credentials: true,
       },
@@ -56,17 +53,6 @@ async function init() {
     {
       plugin: HapiSwagger,
       options: swaggerOptions,
-    },
-    Scooter,
-    {
-      plugin: Blankie,
-      options: {
-        defaultSrc: "self",
-        scriptSrc: ["self"],
-        styleSrc: ["self"],
-        imgSrc: ["self", "data:"],
-        fontSrc: ["self"],
-      },
     },
   ]);
   server.validator(Joi);
