@@ -9,9 +9,23 @@ import { fileURLToPath } from "url";
 import Cookie from "@hapi/cookie";
 import dotenv from "dotenv";
 import Joi from "joi";
+import Inert from "@hapi/inert";
+import HapiSwagger from "hapi-swagger";
+import jwt from "hapi-auth-jwt2";
+import Scooter from "@hapi/scooter";
+import Blankie from "blankie";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
+import { apiRoutes } from "./api-routes.js";
+import { validate } from "./api/jwt-utils.js";
+
+const swaggerOptions = {
+  info: {
+    title: "Markify API",
+    version: "1.0",
+  },
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,9 +40,35 @@ async function init() {
   const server = Hapi.server({
     port: 3000,
     host: "localhost",
+    routes: {
+      cors: {
+        //todo change once app is deployed
+        origin: ["http://localhost:5173"],
+        credentials: true,
+      },
+    },
   });
-  await server.register(Vision);
   await server.register(Cookie);
+  await server.register(jwt);
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions,
+    },
+    Scooter,
+    {
+      plugin: Blankie,
+      options: {
+        defaultSrc: "self",
+        scriptSrc: ["self"],
+        styleSrc: ["self"],
+        imgSrc: ["self", "data:"],
+        fontSrc: ["self"],
+      },
+    },
+  ]);
   server.validator(Joi);
   server.auth.strategy("session", "cookie", {
     cookie: {
@@ -38,6 +78,11 @@ async function init() {
     },
     redirectTo: "/",
     validate: accountsController.validate,
+  });
+  server.auth.strategy("jwt", "jwt", {
+    key: process.env.COOKIE_PASSWORD,
+    validate: validate,
+    verifyOptions: { algorithms: ["HS256"] },
   });
   server.auth.default("session");
   server.views({
@@ -51,8 +96,9 @@ async function init() {
     layout: true,
     isCached: false,
   });
-  db.init();
+  db.init("mongo");
   server.route(webRoutes);
+  server.route(apiRoutes);
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }

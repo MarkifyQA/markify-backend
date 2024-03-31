@@ -1,3 +1,13 @@
 {
-  "employees": []
+  "employees": [
+    {
+      "firstName": "Adam",
+      "lastName": "Gibson",
+      "email": "adamhenrygibson@gmail.com",
+      "supervisor": "test",
+      "companyId": "9672e28d-f78a-42e2-a37f-50437ecb260e",
+      "_id": "3f4dfdfe-589e-4a84-a00f-4241888f2060",
+      "teamid": "fa40f3c6-0aff-4300-bda8-125faa1b61fc"
+    }
+  ]
 }

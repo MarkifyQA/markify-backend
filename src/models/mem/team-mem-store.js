@@ -17,14 +17,16 @@ export const teamMemStore = {
 
   async getTeamById(id) {
     const list = teams.find((team) => team._id === id);
-    list.employees = await employeeMemStore.getEmployeesByTeamId(list._id);
-    console.log(list);
-    return list;
+    if (list) {
+      list.employees = await employeeMemStore.getEmployeesByTeamId(list._id);
+      return list;
+    }
+    return null;
   },
 
   async deleteTeamById(id) {
     const index = teams.findIndex((team) => team._id === id);
-    teams.splice(index, 1);
+    if (index !== -1) teams.splice(index, 1);
   },
 
   async deleteAllTeams() {
