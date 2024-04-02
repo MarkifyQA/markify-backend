@@ -34,7 +34,7 @@ export const teamApi = {
         }
         return team;
       } catch (err) {
-        return Boom.serverUnavailable("No Team with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -58,7 +58,7 @@ export const teamApi = {
         }
         return teams;
       } catch (err) {
-        return Boom.serverUnavailable("No teams with this company id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -106,7 +106,7 @@ export const teamApi = {
         await db.teamStore.deleteTeamById(team._id);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("No Team with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
