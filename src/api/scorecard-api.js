@@ -34,7 +34,7 @@ export const scorecardApi = {
         }
         return scorecard;
       } catch (err) {
-        return Boom.serverUnavailable("No scorecard with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -56,7 +56,7 @@ export const scorecardApi = {
         }
         return scorecards;
       } catch (err) {
-        return Boom.serverUnavailable("No scorecard with this team id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -102,7 +102,7 @@ export const scorecardApi = {
         await db.scorecardStore.deleteScorecard(scorecard._id);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("No scorecard with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
