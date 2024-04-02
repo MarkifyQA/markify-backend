@@ -34,7 +34,7 @@ export const employeeApi = {
         }
         return employee;
       } catch (err) {
-        return Boom.serverUnavailable("No Employee with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -58,7 +58,7 @@ export const employeeApi = {
         }
         return employees;
       } catch (err) {
-        return Boom.serverUnavailable("No employees with this company id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -105,7 +105,7 @@ export const employeeApi = {
         await db.employeeStore.deleteEmployee(employee._id);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("No Employee with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
