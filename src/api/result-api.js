@@ -34,7 +34,7 @@ export const resultApi = {
         }
         return result;
       } catch (err) {
-        return Boom.serverUnavailable("No result with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -56,7 +56,7 @@ export const resultApi = {
         }
         return results;
       } catch (err) {
-        return Boom.serverUnavailable("No results with this team id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -80,7 +80,7 @@ export const resultApi = {
         }
         return results;
       } catch (err) {
-        return Boom.serverUnavailable("No results with this company id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -129,7 +129,7 @@ export const resultApi = {
         await db.resultStore.deleteResult(result._id);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("No result with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
