@@ -61,7 +61,7 @@ export const userApi = {
         }
         return user;
       } catch (err) {
-        return Boom.serverUnavailable("No User with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
@@ -85,7 +85,7 @@ export const userApi = {
         }
         return users;
       } catch (err) {
-        return Boom.serverUnavailable("No Users with this company id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
     tags: ["api"],
